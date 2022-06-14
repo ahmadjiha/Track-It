@@ -28,5 +28,13 @@ const createBoard = (req, res, next) => {
   }
 };
 
+const getBoard = async (req, res, next) => {
+  const id = req.params.id;
+  const board = await Board.find({_id: id});
+  console.log(board);
+  res.json(board);
+}
+
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
+exports.getBoard = getBoard;
