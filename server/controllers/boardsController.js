@@ -3,7 +3,9 @@ const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 
 const getBoards = (req, res, next) => {
-  Board.find({}, "title _id createdAt updatedAt").then((boards) => {
+  Board.find({}, "title _id createdAt updatedAt lists")
+  .populate('lists')
+  .then((boards) => {
     res.json(boards);
   });
 };
@@ -18,6 +20,7 @@ const createBoard = (req, res, next) => {
           _id: board._id,
           createdAt: board.createdAt,
           updatedAt: board.updatedAt,
+          lists: board.lists
         });
       })
       .catch((err) =>
@@ -30,7 +33,7 @@ const createBoard = (req, res, next) => {
 
 const getBoard = async (req, res, next) => {
   const id = req.params.id;
-  const board = await Board.find({_id: id});
+  const board = await Board.find({_id: id}).populate('lists');
   console.log(board);
   res.json(board);
 }

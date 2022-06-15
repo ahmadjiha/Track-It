@@ -26,7 +26,7 @@ const boardSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchBoards.fulfilled, (state, action) => {
       return action.payload.reduce((acc, comm) => {
-        //eslint-disable-next-line
+       // eslint-disable-next-line
         const { lists, ...boardWithoutLists } = comm;
         return acc.concat(boardWithoutLists);
       }, []);

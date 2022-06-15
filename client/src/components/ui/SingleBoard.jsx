@@ -4,17 +4,21 @@ import { useParams } from "react-router-dom";
 import Lists from "../Lists";
 import BoardHeader from "../BoardHeader";
 import { fetchBoards } from "../../features/boards/boards";
+import { fetchLists } from "../../features/lists/lists";
 
 const SingleBoard = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const boards = useSelector((state) => state.boards);
+  const allLists = useSelector((state) => state.lists);
 
   useEffect(() => {
     dispatch(fetchBoards());
+    dispatch(fetchLists());
   }, [dispatch]);
 
   const board = boards.find(board => board._id === id);
+  const lists = allLists.filter(list => board._id === list.boardId);
 
   return (
     <>
@@ -22,7 +26,7 @@ const SingleBoard = () => {
       <BoardHeader id={id} title={board.title} />
     }
       <main>
-        <Lists />
+        <Lists lists={lists}/>
       </main>
       <div className="menu-sidebar">
         <div id="menu-main" className="main slide">

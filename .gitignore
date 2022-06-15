@@ -3,5 +3,5 @@ build
 npm-debug.log
 .env
 .DS_Store
-rest_tests
 commitAuthorFile.txt
+tempNotes.txt
