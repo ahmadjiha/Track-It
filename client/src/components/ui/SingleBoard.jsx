@@ -3,22 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Lists from "../Lists";
 import BoardHeader from "../BoardHeader";
-import { fetchBoards } from "../../features/boards/boards";
-import { fetchLists } from "../../features/lists/lists";
+import { fetchBoard } from "../../features/boards/boards";
 
 const SingleBoard = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const boards = useSelector((state) => state.boards);
-  const allLists = useSelector((state) => state.lists);
+  const lists = useSelector((state) => state.lists);
 
   useEffect(() => {
-    dispatch(fetchBoards());
-    dispatch(fetchLists());
-  }, [dispatch]);
+    dispatch(fetchBoard(id));
+  }, [dispatch, id]);
 
   const board = boards.find(board => board._id === id);
-  const lists = allLists.filter(list => board._id === list.boardId);
 
   return (
     <>

@@ -3,8 +3,7 @@ const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 
 const getBoards = (req, res, next) => {
-  Board.find({}, "title _id createdAt updatedAt lists")
-  .populate('lists')
+  Board.find({}, "title _id createdAt updatedAt")
   .then((boards) => {
     res.json(boards);
   });
@@ -32,10 +31,13 @@ const createBoard = (req, res, next) => {
 };
 
 const getBoard = async (req, res, next) => {
-  const id = req.params.id;
-  const board = await Board.find({_id: id}).populate('lists');
-  console.log(board);
-  res.json(board);
+  try {
+    const id = req.params.id;
+    const board = await Board.find({_id: id}).populate({ path: 'lists', populate: { path: 'cards' }})
+    res.json(board);
+  } catch (e) {
+    return next(new HttpError("BoardId is missing or invalid", 404));
+  }
 }
 
 exports.getBoards = getBoards;

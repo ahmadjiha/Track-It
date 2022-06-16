@@ -6,6 +6,14 @@ const BoardSchema = new Schema({
     type: String,
     required: [true, 'The Board title is required']
   },
+  createdAt: {
+    type: Date,
+    default: new Date()
+  },
+  updatedAt: {
+    type: Date,
+    default: new Date()
+  },
   lists: [
     {
       type: Schema.Types.ObjectId,

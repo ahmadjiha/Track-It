@@ -38,6 +38,14 @@ const apiClient = {
     } catch (e) {
       logError(e);
     }
+  },
+  getBoard: async (id) => {
+    try {
+      const { data } = await axios.get(routes.GET_BOARD_URL + id);
+      return data;
+    } catch (e) {
+      logError(e)
+    }
   }
 };
 

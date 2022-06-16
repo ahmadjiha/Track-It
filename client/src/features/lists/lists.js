@@ -1,12 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import apiClient from "../../lib/ApiClient";
 
-const initialState = [];
+import { fetchBoard } from "../boards/boards";
 
-export const fetchLists = createAsyncThunk("lists/fetchLists", async () => {
-  const data = await apiClient.getBoards();
-  return data;
-});
+const initialState = [];
 
 // export const createList = createAsyncThunk(
 //   "lists/createList",
@@ -24,12 +21,27 @@ const listSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchLists.fulfilled, (state, action) => {
-      return action.payload.reduce((acc, comm) => {
+    builder.addCase(fetchBoard.fulfilled, (state, action) => {
+      const lists = action.payload[0].lists;
+      const listWithoutCards = lists.map(list => {
         // eslint-disable-next-line
-        const { lists, ...boardWithoutLists } = comm;
-        return acc.concat(lists);
-      }, []);
+        const { cards, ...listWithoutCards} = list;
+        return listWithoutCards;
+      })
+      
+      return listWithoutCards;
+
+      // if (state.some(board => board._id === ._id)) {
+      //   return state.map(board => {
+      //     if (board._id === fetchedBoard._id) {
+      //       return fetchedBoard;
+      //     }
+
+      //     return board;
+      //   })
+      // } else {
+      //   return state.concat(fetchedBoard);
+      // }
     })
   },
 });

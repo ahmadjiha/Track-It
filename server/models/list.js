@@ -11,9 +11,13 @@ const ListSchema = new Schema({
   boardId: {
     type: ObjectId,
     ref: "Board"
-  }
+  },
+  cards: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Card"
+    }
+  ]
 });
 
-const List = mongoose.model('List', ListSchema);
-
-module.exports = List;
+module.exports = mongoose.models.List || mongoose.model('List', ListSchema);

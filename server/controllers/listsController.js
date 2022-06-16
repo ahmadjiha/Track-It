@@ -1,13 +1,7 @@
-const List = require("../models/List");
-const Board = require("../models/Board");
+const List = require("../models/list");
+const Board = require("../models/board");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
-
-const getLists = (req, res, next) => {
-  List.find({}, "title _id createdAt updatedAt boardId").then((lists) => {
-    res.json(lists);
-  });
-};
 
 const createList = async (req, res, next) => {
   const errors = validationResult(req);
@@ -33,5 +27,4 @@ const createList = async (req, res, next) => {
   }
 };
 
-exports.getLists = getLists;
 exports.createList = createList;
