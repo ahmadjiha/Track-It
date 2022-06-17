@@ -23,25 +23,24 @@ const listSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
       const lists = action.payload[0].lists;
+
+      if (lists.length === 0) {
+        return state
+      }
+      
       const listWithoutCards = lists.map(list => {
         // eslint-disable-next-line
         const { cards, ...listWithoutCards} = list;
         return listWithoutCards;
       })
-      
-      return listWithoutCards;
 
-      // if (state.some(board => board._id === ._id)) {
-      //   return state.map(board => {
-      //     if (board._id === fetchedBoard._id) {
-      //       return fetchedBoard;
-      //     }
+      const boardId = lists[0].boardId;
 
-      //     return board;
-      //   })
-      // } else {
-      //   return state.concat(fetchedBoard);
-      // }
+      const newState = state.filter(list => {
+        return list.boardId !== boardId;
+      });
+
+      return listWithoutCards.concat(newState);
     })
   },
 });

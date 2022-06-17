@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
   "list": {
-    "title": "Test List 1",
-    "boardId": "62aa058c744d574f5d060b00"
+    "title": "Test List",
+    "boardId": "62aca0c4a1f4c04e08eb70dd"
   }
 }
 

@@ -4,8 +4,7 @@ import CardTile from "./CardTile";
 
 const List = ({ list }) => {
   const allCards = useSelector(state => state.cards);
-  const allCardsFlattened = allCards.flat();
-  const cards = allCardsFlattened.filter(card => card.listId === list._id);
+  const cards = allCards.filter(card => card.listId === list._id);
 
   return (
     <div className="list-wrapper">

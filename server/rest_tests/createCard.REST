@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "card": {
-    "title": "Test Card 1",
-    "listId": "62aa05fd8dca8550549e5b18"
+    "title": "Test More Card Random ",
+    "listId": "62ac9e9ca1f4c04e08eb7036"
   }
 }

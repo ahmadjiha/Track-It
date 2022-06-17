@@ -9,13 +9,14 @@ const SingleBoard = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const boards = useSelector((state) => state.boards);
-  const lists = useSelector((state) => state.lists);
+  const lists = useSelector((state) => state.lists).filter(list => list.boardId === id);
 
   useEffect(() => {
     dispatch(fetchBoard(id));
   }, [dispatch, id]);
 
   const board = boards.find(board => board._id === id);
+  
 
   return (
     <>
