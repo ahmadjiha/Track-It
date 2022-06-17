@@ -1,0 +1,1 @@
+GET http://localhost:5001/api/cards/62ab571833f11020f86cc416

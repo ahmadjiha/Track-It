@@ -1,0 +1,29 @@
+
+POST http://localhost:5001/api/lists
+Content-Type: application/json
+
+{
+  "list": {
+    "title": "Test List",
+    "boardId": "62aca0c4a1f4c04e08eb70dd"
+  }
+}
+
+###
+
+POST http://localhost:5001/api/boards
+Content-Type: application/json
+
+{
+  "board": {
+    "title": "Test Board 1"
+  }
+}
+
+###
+
+GET http://localhost:5001/api/boards
+
+###
+
+GET http://localhost:5001/api/board/62aa058c744d574f5d060b00
