@@ -5,16 +5,25 @@ import { fetchBoard } from "../boards/boards";
 
 const initialState = [];
 
-// export const createList = createAsyncThunk(
-//   "lists/createList",
-//   async (newList, callback) => {
-//     const data = await apiClient.createList(newList);
-//     if (callback) {
-//       callback;
-//     }
-//     return data;
-//   }
-// );
+export const createList = createAsyncThunk(
+  "lists/createList",
+  async (newList, callback) => {
+    try {
+      const data = await apiClient.createList(newList);
+      console.log(data);
+      return data;
+
+    } catch (e) {
+      console.log(e);
+    }
+
+    if (callback) {
+      callback;
+    }
+
+    console.log("Did we make it here?")
+  }
+);
 
 const listSlice = createSlice({
   name: "lists",
@@ -42,7 +51,15 @@ const listSlice = createSlice({
 
       return listWithoutCards.concat(newState);
     })
+    builder.addCase(createList.fulfilled, (state, action) => {
+      if (!action.payload) {
+        return state
+      }
+
+      return state.concat(action.payload);
+    })
   },
+
 });
 
 export default listSlice.reducer;
