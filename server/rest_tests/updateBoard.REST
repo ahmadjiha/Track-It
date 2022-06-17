@@ -1,0 +1,44 @@
+PUT http://localhost:5001/api/lists/62aca0c4a166c04e08eb70dd
+Content-Type: application/json
+
+{
+  "list": {
+    "title": "Test List",
+    "boardId": "62aca0c4a1f4c04e08eb70dd"
+  }
+}
+
+###
+
+PUT http://localhost:5001/api/lists/62ab7641afb9892815a5b555
+Content-Type: application/json
+
+{
+  "list": {
+    "title": "Editing lists with a new title",
+    "boardId": "62aa058c744d574f5d060b00"
+  }
+}
+
+###
+
+
+PUT http://localhost:5001/api/lists/62ab7641afb9892815a5b555
+Content-Type: application/json
+
+{
+  "list": {
+    "title": "",
+    "boardId": "62aa058c744d574f5d060b00"
+  }
+}
+
+### 
+PUT http://localhost:5001/api/lists/62ab7641afb9892815a5b555
+Content-Type: application/json
+
+{
+  "list": {
+    "boardId": "62aa058c744d574f5d060b00"
+  }
+}

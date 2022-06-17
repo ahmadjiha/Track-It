@@ -8,6 +8,14 @@ const ListSchema = new Schema({
     type: String,
     required: [true, 'The List title is required']
   },
+  createdAt: {
+    type: Date,
+    default: new Date()
+  },
+  updatedAt: {
+    type: Date,
+    default: new Date()
+  },
   boardId: {
     type: ObjectId,
     ref: "Board"
