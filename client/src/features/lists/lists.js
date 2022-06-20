@@ -5,16 +5,34 @@ import { fetchBoard } from "../boards/boards";
 
 const initialState = [];
 
-// export const createList = createAsyncThunk(
-//   "lists/createList",
-//   async (newList, callback) => {
-//     const data = await apiClient.createList(newList);
-//     if (callback) {
-//       callback;
-//     }
-//     return data;
-//   }
-// );
+export const createList = createAsyncThunk(
+  "lists/createList",
+  async (args) => {
+    const { newList, callback } = args;
+    const data = await apiClient.createList(newList);
+
+    if (callback) {
+      callback();
+    }
+
+    return data;
+  }
+);
+
+export const editListTitle = createAsyncThunk(
+  "lists/editListTitle",
+  async (args) => {
+    const { updatedList, callback } = args;
+    const data = await apiClient.editListTitle(updatedList._id, updatedList);
+
+    if (callback) {
+      callback();
+    }
+
+    console.log(data);
+    return data;
+  }
+);
 
 const listSlice = createSlice({
   name: "lists",
@@ -41,8 +59,25 @@ const listSlice = createSlice({
       });
 
       return listWithoutCards.concat(newState);
+    }),
+    builder.addCase(createList.fulfilled, (state, action) => {
+      if (!action.payload) {
+        return state
+      }
+
+      return state.concat(action.payload);
+    }),
+    builder.addCase(editListTitle.fulfilled, (state, action) => {
+      return state.map(list => {
+        if (list._id === action.payload._id) {
+          return action.payload;
+        }
+
+        return list;
+      })
     })
   },
+
 });
 
 export default listSlice.reducer;
