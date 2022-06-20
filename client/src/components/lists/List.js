@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import CardTile from "./CardTile";
-import { editListTitle } from "../features/lists/lists";
+import CardTile from "../cards/CardTile";
+import { editListTitle } from "../../features/lists/lists";
 
 const List = ({ list }) => {
   const dispatch = useDispatch();

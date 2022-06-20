@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import List from "./List";
 import { useParams } from "react-router-dom";
-import { createList } from "../features/lists/lists";
+import { createList } from "../../features/lists/lists";
 import { useSelector, useDispatch } from "react-redux";
 
 
