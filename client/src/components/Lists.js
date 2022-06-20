@@ -2,27 +2,23 @@ import React, { useState } from "react";
 import List from "./List";
 import { useParams } from "react-router-dom";
 import { createList } from "../features/lists/lists";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 
-const Lists = ({ lists }) => {
+const Lists = () => {
   const dispatch = useDispatch();
+  const { id: boardId } = useParams();
+  const lists = useSelector((state) => state.lists).filter(list => list.boardId === boardId);
+
   const [showNewListBox, setShowNewListBox] = useState(false);  
   const [newListTitle, setNewListTitle] = useState('');
-  const { id: boardId } = useParams();
-  const newListDivVisible = showNewListBox ? "new-list selected" : "new-list";
 
+  const newListClassName = showNewListBox ? "new-list selected" : "new-list";
   const listSaveButtonDisabled = newListTitle.length === 0;
 
-  const handleClickNewList = (event) => {
+  const handleToggleNewList = (event) => {
     event.preventDefault();
-    setShowNewListBox(true);
-  }
-  
-  const handleCloseNewList = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setShowNewListBox(false);
+    setShowNewListBox(!showNewListBox);
   }
 
   const handleNewListTitle = (event) => {
@@ -38,8 +34,7 @@ const Lists = ({ lists }) => {
       boardId: boardId
     };
     
-    await dispatch(createList(newList));
-    resetNewListBox();
+    dispatch(createList({newList, callback: resetNewListBox}));
   }
 
   const resetNewListBox = () => {
@@ -56,12 +51,12 @@ const Lists = ({ lists }) => {
         ))}
       </div>
       
-      <div id="new-list" className={newListDivVisible} onClick={handleClickNewList} >
-        <span>Add a list...</span>
+      <div id="new-list" className={newListClassName}>
+        <span onClick={handleToggleNewList}>Add a list...</span>
         <input type="text" placeholder="Add a list..." onChange={handleNewListTitle} value={newListTitle}/>
         <div>
           <input type="submit" className="button" value="Save" disabled={listSaveButtonDisabled} onClick={handleSaveNewList}/>
-          <i className="x-icon icon" onClick={handleCloseNewList}></i>
+          <i className="x-icon icon" onClick={handleToggleNewList}></i>
         </div>
       </div>
     </div>

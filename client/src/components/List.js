@@ -1,10 +1,36 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import CardTile from "./CardTile";
+import { editListTitle } from "../features/lists/lists";
 
 const List = ({ list }) => {
+  const dispatch = useDispatch();
+  const [editedListTitle, setEditedListTitle] = useState(list.title);
+  const [editTitleVisible, setEditTitleVisible] = useState(false);
+
   const allCards = useSelector(state => state.cards);
   const cards = allCards.filter(card => card.listId === list._id);
+
+  const handleTitleClick = (event) => {
+    event.preventDefault();
+    setEditTitleVisible(true);
+  }
+
+  const handleEditListTitle = (event) => {
+    event.preventDefault();
+    setEditedListTitle(event.target.value);
+  }
+
+  const handleTitleChange = (event) => {
+    event.preventDefault();
+    const updatedList = {
+      _id: list._id,
+      title: editedListTitle,
+      boardId: list.boardId
+    }
+
+    dispatch(editListTitle({ updatedList, callback:  () => setEditTitleVisible(false)}))
+  }
 
   return (
     <div className="list-wrapper">
@@ -12,7 +38,19 @@ const List = ({ list }) => {
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            <p className="list-title">{list.title}</p>
+            { editTitleVisible ? 
+              <input
+                type="text"
+                className="list-title"
+                value={editedListTitle}
+                onChange={handleEditListTitle}
+                onBlur={handleTitleChange}
+                autoFocus
+              />
+              :
+              <p onClick={handleTitleClick} className="list-title">{list.title}</p>
+            }
+
           </div>
           <div className="add-dropdown add-top">
             <div className="card"></div>
@@ -48,6 +86,8 @@ const List = ({ list }) => {
     </div>
   )
 }
+
+
 
 /*
             <div className="card-background">

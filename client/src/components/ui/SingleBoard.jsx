@@ -9,7 +9,6 @@ const SingleBoard = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const boards = useSelector((state) => state.boards);
-  const lists = useSelector((state) => state.lists).filter(list => list.boardId === id);
 
   useEffect(() => {
     dispatch(fetchBoard(id));
@@ -24,7 +23,7 @@ const SingleBoard = () => {
       <BoardHeader id={id} title={board.title} />
     }
       <main>
-        <Lists lists={lists}/>
+        <Lists />
       </main>
       <div className="menu-sidebar">
         <div id="menu-main" className="main slide">
