@@ -9,7 +9,7 @@ export const createList = createAsyncThunk(
   "lists/createList",
   async (args) => {
     const { newList, callback } = args;
-    const data = await apiClient.createList(newList);
+    const data = await apiClient.createList(newList.boardId, newList);
 
     if (callback) {
       callback();

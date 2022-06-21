@@ -31,9 +31,9 @@ const apiClient = {
       logError(e);
     }
   },
-  createList: async (list) => {
+  createList: async (boardId, list) => {
     try {
-      const { data } = await axios.post(routes.CREATE_LIST_URL, { list });
+      const { data } = await axios.post(routes.CREATE_LIST_URL, { boardId, list });
       return data;
     } catch (e) {
       logError(e);
@@ -49,7 +49,7 @@ const apiClient = {
   },
   editListTitle: async (id, updatedList) => {
     try {
-      const { data } = await axios.put(routes.EDIT_LIST_URL + id, { list: updatedList });
+      const { data } = await axios.put(routes.EDIT_LIST_URL + id, { title: updatedList.title });
 
       return data;
     } catch (e) {

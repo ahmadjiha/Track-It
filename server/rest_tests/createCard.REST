@@ -2,8 +2,7 @@ POST http://localhost:5001/api/cards
 Content-Type: application/json
 
 {
+  "listId": "62aca0e0a1f4c04e08eb70e1",
   "card": {
-    "title": "Test More Card Random ",
-    "listId": "62ac9e9ca1f4c04e08eb7036"
   }
 }
