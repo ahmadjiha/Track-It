@@ -7,26 +7,32 @@ const createCard = async (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     try {
-      const list = await List.findById(req.body.listId);
+      const { listId, card } = req.body;
+      const list = await List.findById(listId);
 
       if (!list) {
         return next(new HttpError("Invalid List Id", 404));
       }
 
-      const card = await Card.create(req.body.card);
-      list.cards = list.cards.concat(card._id);
+      card.listId = listId;
+      card.boardId = list.boardId;
+      const newCard = await Card.create(card);
+
+      list.cards = list.cards.concat(newCard._id);
+
       await list.save();
 
       res.json({
-        _id: card._id,
-        title: card.title,
-        description: card.description,
-        listId: card.listId,
-        createdAt: card.createdAt,
-        updatedAt: card.updatedAt
+        _id: newCard._id,
+        title: newCard.title,
+        description: newCard.description,
+        listId: newCard.listId,
+        createdAt: newCard.createdAt,
+        updatedAt: newCard.updatedAt
       });
       
     } catch (e) {
+      console.log("error:", e)
       next(new HttpError("Creating card failed, please try again", 500))
     }
   } else {
@@ -38,6 +44,7 @@ const getCard = async (req, res, next) => {
   try {
     const id = req.params.id;
     const card = await Card.find({ _id: id});
+    console.log(card);
     res.json(card);
   } catch (e) {
     return next(new HttpError("Invalid or missing ID.", 404))

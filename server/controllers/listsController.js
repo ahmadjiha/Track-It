@@ -8,17 +8,18 @@ const createList = async (req, res, next) => {
   if (errors.isEmpty()) {
     try {
       const { boardId, list } = req.body;
+      const boards = await Board.find({ _id: boardId });
+      const currentBoard = boards[0];
       
-      const currentBoard = await Board.find({ _id: boardId });
-      
-      if (currentBoard.length === 0) {
+      if (boards.length === 0) {
         next(new HttpError("Invalid Board Id", 404))
       }
 
+      list.boardId = boardId;
       const newList = await List.create(list);
       currentBoard.lists = currentBoard.lists.concat(newList._id);
       await currentBoard.save();
-  
+
       res.json({
         title: newList.title,
         _id: newList._id,

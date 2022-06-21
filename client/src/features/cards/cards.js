@@ -4,6 +4,21 @@ import { fetchBoard } from "../boards/boards";
 
 const initialState = [];
 
+export const createCard = createAsyncThunk(
+  "cards/createCard",
+  async (args) => {
+    const { listId, card, callback} = args;
+
+    const data = await apiClient.createCard(listId, card);
+
+    if (callback) {
+      callback();
+    }
+
+    return data;
+  }
+);
+
 const cardSlice = createSlice({
   name: "cards",
   initialState,

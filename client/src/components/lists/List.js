@@ -2,14 +2,47 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CardTile from "../cards/CardTile";
 import { editListTitle } from "../../features/lists/lists";
+import { createCard } from "../../features/cards/cards";
 
 const List = ({ list }) => {
   const dispatch = useDispatch();
   const [editedListTitle, setEditedListTitle] = useState(list.title);
   const [editTitleVisible, setEditTitleVisible] = useState(false);
+  const [showNewCardForm, setshowNewCardForm] = useState(false);
+  const [newCardTitle, setNewCardTitle] = useState("");
+
+  const listWrapperClassName = showNewCardForm ? "list-wrapper add-dropdown-active" : "list-wrapper";
+  const newCardDivClassName = showNewCardForm ? "add-dropdown add-bottom active-card" : "add-dropdown add-bottom"
+
+  // const disableAddCardSubmitButton = newCardTitle.length === 0 ? true : false;
 
   const allCards = useSelector(state => state.cards);
   const cards = allCards.filter(card => card.listId === list._id);
+
+  console.log(allCards);
+  console.log(cards);
+
+  const toggleNewCardFormVisible = () => {
+    setshowNewCardForm(!showNewCardForm);
+    setEditedListTitle("");
+  }
+
+  const handleAddCardClick = (event) => {
+    event.preventDefault();
+    toggleNewCardFormVisible();
+  }
+
+  const handleNewCardTitleChange = (event) => {
+    event.preventDefault();
+    setNewCardTitle(event.target.value);
+  }
+
+  const handleAddCard = (event) => {
+    event.preventDefault();
+    if (newCardTitle.length !== 0) {
+      dispatch(createCard({ listId: list._id, card: { title: newCardTitle }, callback: toggleNewCardFormVisible }));
+    }
+  }
 
   const handleTitleClick = (event) => {
     event.preventDefault();
@@ -33,7 +66,8 @@ const List = ({ list }) => {
   }
 
   return (
-    <div className="list-wrapper">
+    
+    <div className={listWrapperClassName}>
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
@@ -66,19 +100,19 @@ const List = ({ list }) => {
             ))}
 
           </div>
-          <div className="add-dropdown add-bottom">
+          <div className={newCardDivClassName}>
             <div className="card">
               <div className="card-info"></div>
-              <textarea name="add-card"></textarea>
+              <textarea name="add-card" onChange={handleNewCardTitleChange}></textarea>
               <div className="members"></div>
             </div>
-            <a className="button">Add</a>
-            <i className="x-icon icon"></i>
+            <a className="button" onClick={handleAddCard}>Add</a>
+            <i className="x-icon icon" onClick={toggleNewCardFormVisible}></i>
             <div className="add-options">
               <span>...</span>
             </div>
           </div>
-          <div className="add-card-toggle" data-position="bottom">
+          <div className="add-card-toggle" data-position="bottom" onClick={handleAddCardClick}>
             Add a card...
           </div>
         </div>
