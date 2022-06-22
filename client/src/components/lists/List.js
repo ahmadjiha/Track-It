@@ -19,9 +19,6 @@ const List = ({ list }) => {
   const allCards = useSelector(state => state.cards);
   const cards = allCards.filter(card => card.listId === list._id);
 
-  console.log(allCards);
-  console.log(cards);
-
   const toggleNewCardFormVisible = () => {
     setshowNewCardForm(!showNewCardForm);
     setEditedListTitle("");

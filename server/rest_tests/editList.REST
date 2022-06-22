@@ -1,7 +1,7 @@
 
-PUT http://localhost:5001/api/lists/62b1e186b3bdb35217b281f3
+PUT http://localhost:5001/api/lists/62b3317229c942852ee5ed59
 Content-Type: application/json
 
 {
-  "title": "New Random updated title"
+  "title": "Testing API 3"
 }

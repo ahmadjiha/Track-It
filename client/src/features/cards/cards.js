@@ -51,6 +51,10 @@ const cardSlice = createSlice({
 
       return cardsWithoutList.concat(newState);
     })
+    builder.addCase(createCard.fulfilled, (state, action) => {
+      const card = action.payload;
+      return state.concat(card);
+    })
   }
 })
 
