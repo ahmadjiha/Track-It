@@ -3,9 +3,9 @@ POST http://localhost:5001/api/lists
 Content-Type: application/json
 
 {
+  "boardId": "62b3313829c942852ee5ed4e",
   "list": {
-    "title": "Test List",
-    "boardId": "62aca0c4a1f4c04e08eb70dd"
+    "title": "Testing API 2"
   }
 }
 

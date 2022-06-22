@@ -7,29 +7,44 @@ const createCard = async (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     try {
-      const card = await Card.create(req.body.card);
-      const list = await List.findById(card.listId);
-      list.cards = list.cards.concat(card._id);
+      const { listId, card } = req.body;
+      const list = await List.findById(listId);
+
+      if (!list) {
+        return next(new HttpError("Invalid List Id", 404));
+      }
+
+      card.listId = listId;
+      card.boardId = list.boardId;
+      const newCard = await Card.create(card);
+
+      list.cards = list.cards.concat(newCard._id);
+
       await list.save();
 
       res.json({
-        title: card.title,
-        description: card.description,
-        listId: card.listId
+        _id: newCard._id,
+        title: newCard.title,
+        description: newCard.description,
+        listId: newCard.listId,
+        createdAt: newCard.createdAt,
+        updatedAt: newCard.updatedAt
       });
       
     } catch (e) {
+      console.log("error:", e)
       next(new HttpError("Creating card failed, please try again", 500))
     }
   } else {
-    return next(new HttpError("The input field is empty.", 404));
+    return next(new HttpError("Unprocessable Entity", 422));
   }
 }
 
 const getCard = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const card = await Card.find({ _id: id});
+    const card = await Card.findById(id);
+    console.log(card);
     res.json(card);
   } catch (e) {
     return next(new HttpError("Invalid or missing ID.", 404))

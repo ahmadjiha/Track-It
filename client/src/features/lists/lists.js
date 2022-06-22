@@ -9,7 +9,7 @@ export const createList = createAsyncThunk(
   "lists/createList",
   async (args) => {
     const { newList, callback } = args;
-    const data = await apiClient.createList(newList);
+    const data = await apiClient.createList(newList.boardId, newList);
 
     if (callback) {
       callback();
@@ -40,7 +40,7 @@ const listSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
-      const lists = action.payload[0].lists;
+      const lists = action.payload.lists;
 
       if (lists.length === 0) {
         return state

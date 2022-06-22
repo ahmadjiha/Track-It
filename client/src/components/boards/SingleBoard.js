@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import Lists from "../lists/Lists";
 import BoardHeader from "./BoardHeader";
 import { fetchBoard } from "../../features/boards/boards";
@@ -10,20 +10,36 @@ const SingleBoard = () => {
   const { id } = useParams();
   const boards = useSelector((state) => state.boards);
 
-  useEffect(() => {
-    dispatch(fetchBoard(id));
-  }, [dispatch, id]);
+  const cards = useSelector(state => state.cards);
 
-  const board = boards.find(board => board._id === id);
-  
+  let boardId;
+
+  const pathname = useLocation().pathname;
+
+  if (pathname.startsWith('/board')) {
+    boardId = id;
+  } else {
+    const card = cards.find(card => card._id === id)
+    if (card) {
+      boardId = card.boardId
+    }
+  }
+
+  useEffect(() => {
+    if (boardId) {
+      dispatch(fetchBoard(boardId));
+    }
+  }, [dispatch, boardId]);
+
+  const board = boards.find(board => board._id === boardId);
 
   return (
     <>
     {board &&
-      <BoardHeader id={id} title={board.title} />
+      <BoardHeader id={boardId} title={board.title} />
     }
       <main>
-        <Lists />
+        <Lists boardId={boardId}/>
       </main>
       <div className="menu-sidebar">
         <div id="menu-main" className="main slide">
@@ -109,7 +125,6 @@ const SingleBoard = () => {
           </div>
         </div>
       </div>
-      <div id="modal-container"></div>
       <div id="dropdown-container"></div>
     </>
   );

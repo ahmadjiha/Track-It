@@ -1,1 +1,1 @@
-GET http://localhost:5001/api/boards/62aa058c744d574f5d060b00
+GET http://localhost:5001/api/boards

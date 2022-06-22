@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import List from "./List";
-import { useParams } from "react-router-dom";
 import { createList } from "../../features/lists/lists";
 import { useSelector, useDispatch } from "react-redux";
 
 
-const Lists = () => {
+const Lists = ({ boardId }) => {
   const dispatch = useDispatch();
-  const { id: boardId } = useParams();
   const lists = useSelector((state) => state.lists).filter(list => list.boardId === boardId);
 
   const [showNewListBox, setShowNewListBox] = useState(false);  

@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as routes from "../constants/ApiRoutes";
+import { fetchCard } from "../features/cards/cards";
 
 function logError(errorResponse) {
   const response = errorResponse.response;
@@ -31,9 +32,9 @@ const apiClient = {
       logError(e);
     }
   },
-  createList: async (list) => {
+  createList: async (boardId, list) => {
     try {
-      const { data } = await axios.post(routes.CREATE_LIST_URL, { list });
+      const { data } = await axios.post(routes.CREATE_LIST_URL, { boardId, list });
       return data;
     } catch (e) {
       logError(e);
@@ -49,8 +50,25 @@ const apiClient = {
   },
   editListTitle: async (id, updatedList) => {
     try {
-      const { data } = await axios.put(routes.EDIT_LIST_URL + id, { list: updatedList });
+      const { data } = await axios.put(routes.EDIT_LIST_URL + id, { title: updatedList.title });
 
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  },
+  createCard: async (listId, card) => {
+    try {
+      const { data } = await axios.post(routes.CREATE_CARD_URL, { listId, card });
+
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  },
+  fetchCard: async (cardId) => {
+    try {
+      const { data } = await axios.get(routes.GET_CARD_URL + cardId);
       return data;
     } catch (e) {
       logError(e);

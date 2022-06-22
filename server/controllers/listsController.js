@@ -7,23 +7,31 @@ const createList = async (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     try {
-      const list = await List.create(req.body.list);
-      const currentBoard = await Board.findById(list.boardId);
-      currentBoard.lists = currentBoard.lists.concat(list._id);
+      const { boardId, list } = req.body;
+      const boards = await Board.find({ _id: boardId });
+      const currentBoard = boards[0];
+      
+      if (boards.length === 0) {
+        next(new HttpError("Invalid Board Id", 404))
+      }
+
+      list.boardId = boardId;
+      const newList = await List.create(list);
+      currentBoard.lists = currentBoard.lists.concat(newList._id);
       await currentBoard.save();
-  
+
       res.json({
-        title: list.title,
-        _id: list._id,
-        createdAt: list.createdAt,
-        updatedAt: list.updatedAt,
-        boardId: list.boardId,
+        title: newList.title,
+        _id: newList._id,
+        createdAt: newList.createdAt,
+        updatedAt: newList.updatedAt,
+        boardId: newList.boardId,
       });
     } catch (err) {
       next(new HttpError("Creating list failed, please try again", 500))
     }
   } else {
-    return next(new HttpError("The input field is empty.", 404));
+    next(new HttpError("Unprocessable Entity", 422));
   }
 };
 
@@ -39,7 +47,7 @@ const editList = async(req, res, next) => {
         return next(new HttpError("Invalid ID", 404))
       }
 
-      list.title = req.body.list.title;
+      list.title = req.body.title;
       list.updatedAt = new Date();
 
       await list.save();
