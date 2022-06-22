@@ -33,7 +33,7 @@ const createBoard = (req, res, next) => {
 const getBoard = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const board = await Board.find({_id: id}).populate({ path: 'lists', populate: { path: 'cards' }})
+    const board = await Board.findById(id).populate({ path: 'lists', populate: { path: 'cards' }})
     res.json(board);
   } catch (e) {
     return next(new HttpError("BoardId is missing or invalid", 404));

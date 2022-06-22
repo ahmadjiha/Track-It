@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as routes from "../constants/ApiRoutes";
+import { fetchCard } from "../features/cards/cards";
 
 function logError(errorResponse) {
   const response = errorResponse.response;
@@ -60,6 +61,14 @@ const apiClient = {
     try {
       const { data } = await axios.post(routes.CREATE_CARD_URL, { listId, card });
 
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  },
+  fetchCard: async (cardId) => {
+    try {
+      const { data } = await axios.get(routes.GET_CARD_URL + cardId);
       return data;
     } catch (e) {
       logError(e);

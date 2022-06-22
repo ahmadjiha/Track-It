@@ -40,7 +40,7 @@ const listSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
-      const lists = action.payload[0].lists;
+      const lists = action.payload.lists;
 
       if (lists.length === 0) {
         return state

@@ -37,7 +37,7 @@ const boardSlice = createSlice({
     }),
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
       // eslint-disable-next-line
-      const {lists, ...fetchedBoard} = action.payload[0];
+      const {lists, ...fetchedBoard} = action.payload;
 
       if (state.some(board => board._id === fetchedBoard._id)) {
         return state.map(board => {
