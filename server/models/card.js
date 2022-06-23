@@ -42,10 +42,12 @@ const CardSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Board'
   },
-  comments: {
-    type: Array,
-    default: []
-  },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment"
+    }
+  ],
   commentsCount: {
     type: Number,
     default: 0
