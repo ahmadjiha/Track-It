@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { fetchCard } from "../../features/cards/cards";
@@ -9,12 +8,11 @@ import CardDueDate from "./CardDueDate";
 import Labels from "./Labels";
 import SideBar from "./SideBar";
 import DescriptionForm from "./DescriptionForm";
-import { updateCard } from "../../features/cards/cards";
+import CardHeader from "./CardHeader";
 
 const Card = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [cardTitle, setCardTitle] = useState("");
 
   useEffect(() => {
     dispatch(fetchCard({id}));
@@ -32,18 +30,6 @@ const Card = () => {
 
   const list = lists.find(list => list._id === card.listId);
 
-  const handleSetCardTitle = (event) => {
-    // check: handling state (in-component)
-    event.preventDefault();
-    setCardTitle(event.target.value);
-  }
-
-  const handleUpdateCardTitle = (event) => {
-    event.preventDefault();
-    const cardUpdates = { title: cardTitle }
-    dispatch(updateCard({ id, cardUpdates }));
-  }
-
   return (
     <div id="modal-container">
       <div className="screen"></div>
@@ -51,14 +37,7 @@ const Card = () => {
         <Link to={"/boards/" + card.boardId}>
           <i className="x-icon icon close-modal"></i>
         </Link>
-        <header>
-          <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }} defaultValue={card.title} onChange={handleSetCardTitle} onBlur={handleUpdateCardTitle}/>
-          <p>
-            in list <a className="link">{list.title}</a>
-            <i className="sub-icon sm-icon"></i>
-          </p>
-        </header>
+        <CardHeader card={card} list={list}/>
         <section className="modal-main">
           <ul className="modal-outer-list">
             <li className="details-section">
