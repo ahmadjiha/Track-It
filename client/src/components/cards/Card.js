@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
@@ -9,10 +9,12 @@ import CardDueDate from "./CardDueDate";
 import Labels from "./Labels";
 import SideBar from "./SideBar";
 import DescriptionForm from "./DescriptionForm";
+import { updateCard } from "../../features/cards/cards";
 
 const Card = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const [cardTitle, setCardTitle] = useState("");
 
   useEffect(() => {
     dispatch(fetchCard({id}));
@@ -27,7 +29,20 @@ const Card = () => {
     return
   }
 
+
   const list = lists.find(list => list._id === card.listId);
+
+  const handleSetCardTitle = (event) => {
+    // check: handling state (in-component)
+    event.preventDefault();
+    setCardTitle(event.target.value);
+  }
+
+  const handleUpdateCardTitle = (event) => {
+    event.preventDefault();
+    const cardUpdates = { title: cardTitle }
+    dispatch(updateCard({ id, cardUpdates }));
+  }
 
   return (
     <div id="modal-container">
@@ -38,7 +53,7 @@ const Card = () => {
         </Link>
         <header>
           <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }} value={card.title} readOnly />
+          <textarea className="list-title" style={{ height: "45px" }} defaultValue={card.title} onChange={handleSetCardTitle} onBlur={handleUpdateCardTitle}/>
           <p>
             in list <a className="link">{list.title}</a>
             <i className="sub-icon sm-icon"></i>
