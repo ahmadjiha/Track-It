@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
+
 import { fetchCard } from "../../features/cards/cards";
+
+import CardHeader from "./CardHeader";
+import Details from "./Details";
 import AddComment from "./AddComment"
 import Activity from "./Activity";
-import CardDueDate from "./CardDueDate";
-import Labels from "./Labels";
 import SideBar from "./SideBar";
-import DescriptionForm from "./DescriptionForm";
-import CardHeader from "./CardHeader";
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -40,17 +40,7 @@ const Card = () => {
         <CardHeader card={card} list={list}/>
         <section className="modal-main">
           <ul className="modal-outer-list">
-            <li className="details-section">
-              <ul className="modal-details-list">
-                {card.labels.length > 0 &&
-                  <Labels card={card} />
-                }
-                {card.dueDate && 
-                  <CardDueDate card={card} />
-                }
-              </ul>
-              <DescriptionForm card={card}/>
-            </li>
+            <Details card={card}/>
             <AddComment card={card} />
             <Activity card={card}/>
           </ul>
