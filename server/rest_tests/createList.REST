@@ -26,4 +26,4 @@ GET http://localhost:5001/api/boards
 
 ###
 
-GET http://localhost:5001/api/board/62aa058c744d574f5d060b00
+GET http://localhost:5001/api/boards/62b33ee07f460004cca1c7c9

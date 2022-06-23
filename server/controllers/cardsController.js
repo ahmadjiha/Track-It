@@ -38,7 +38,7 @@ const createCard = async (req, res, next) => {
   } else {
     return next(new HttpError("Unprocessable Entity", 422));
   }
-}
+};
 
 const getCard = async (req, res, next) => {
   try {
@@ -49,7 +49,33 @@ const getCard = async (req, res, next) => {
   } catch (e) {
     return next(new HttpError("Invalid or missing ID.", 404))
   }
-}
+};
+
+// Still need to implement actions for cards
+
+const updateCard = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (errors.isEmpty()) {
+    try {
+      const { id } = req.params;
+      const cardUpdates = req.body.card;
+      const cardWithUpdates = await Card.findByIdAndUpdate(id, cardUpdates, { new: true });
+  
+      if (cardWithUpdates === null) {
+        return next(new HttpError("Invalid or non-existent card id", 404));
+      }
+  
+      res.json(cardWithUpdates);
+    } catch (e) {
+      console.log("Internal Server Error:", e);
+      next(new HttpError("Updating card failed, please try again", 500));
+    }
+  } else {
+    next(new HttpError("Unprocessable entity", 422));
+  }
+};
 
 exports.createCard = createCard;
 exports.getCard = getCard;
+exports.updateCard = updateCard;

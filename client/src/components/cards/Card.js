@@ -29,8 +29,6 @@ const Card = () => {
 
   const list = lists.find(list => list._id === card.listId);
 
-
-
   return (
     <div id="modal-container">
       <div className="screen"></div>
@@ -40,9 +38,7 @@ const Card = () => {
         </Link>
         <header>
           <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }}>
-            {card.title}
-          </textarea>
+          <textarea className="list-title" style={{ height: "45px" }} value={card.title} readOnly />
           <p>
             in list <a className="link">{list.title}</a>
             <i className="sub-icon sm-icon"></i>
