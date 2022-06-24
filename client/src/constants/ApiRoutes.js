@@ -6,3 +6,5 @@ export const EDIT_LIST_URL = "/api/lists/";
 export const CREATE_CARD_URL = "/api/cards";
 export const GET_CARD_URL = "/api/cards/";
 export const CREATE_COMMENT_URL = "/api/comments"
+export const UPDATE_CARD_URL = "/api/cards/"
+

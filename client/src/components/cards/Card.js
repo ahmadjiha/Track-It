@@ -1,14 +1,14 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
+
 import { fetchCard } from "../../features/cards/cards";
+
+import CardHeader from "./CardHeader";
+import Details from "./Details";
 import AddComment from "./AddComment"
 import Activity from "./Activity";
-import CardDueDate from "./CardDueDate";
-import Labels from "./Labels";
 import SideBar from "./SideBar";
-import DescriptionForm from "./DescriptionForm";
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -29,9 +29,8 @@ const Card = () => {
     return null
   }
 
+
   const list = lists.find(list => list._id === card.listId);
-
-
 
   return (
     <div id="modal-container">
@@ -40,29 +39,10 @@ const Card = () => {
         <Link to={"/boards/" + card.boardId}>
           <i className="x-icon icon close-modal"></i>
         </Link>
-        <header>
-          <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }}>
-            {card.title}
-          </textarea>
-          <p>
-            in list <a className="link">{list.title}</a>
-            <i className="sub-icon sm-icon"></i>
-          </p>
-        </header>
+        <CardHeader card={card} list={list}/>
         <section className="modal-main">
           <ul className="modal-outer-list">
-            <li className="details-section">
-              <ul className="modal-details-list">
-                {card.labels.length > 0 &&
-                  <Labels card={card} />
-                }
-                {card.dueDate && 
-                  <CardDueDate card={card} />
-                }
-              </ul>
-              <DescriptionForm card={card}/>
-            </li>
+            <Details card={card}/>
             <AddComment card={card} />
             <Activity card={card}/>
           </ul>

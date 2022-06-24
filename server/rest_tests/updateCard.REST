@@ -1,0 +1,49 @@
+PUT http://localhost:5001/api/cards/62b33ef77f460004cca1c7d9
+Content-Type: application/json
+
+{
+  "card": {
+    "description": "My updated description",
+    "title": "My updated title"
+  }
+}
+
+### If empty title is provided, return 422
+PUT http://localhost:5001/api/cards/62b33ef77f460004cca1c7d9
+Content-Type: application/json
+
+{
+  "card": {
+    "description": "My updated description",
+    "title": ""
+  }
+}
+
+### If no allowed attributes are provided, return 422
+PUT http://localhost:5001/api/cards/62b33ef77f460004cca1c7d9
+Content-Type: application/json
+
+{
+  "card": {
+  }
+}
+
+
+### If non-allowed attributes are provided, return 422
+PUT http://localhost:5001/api/cards/62b33ef77f460004cca1c7d9
+Content-Type: application/json
+
+{
+  "card": {
+    "description": "My updated description",
+    "_id": "62b33ef77f460004cca1c7d8"
+  }
+}
+
+### If no card object is provided, return 422
+PUT http://localhost:5001/api/cards/62b33ef77f460004cca1c7d9
+Content-Type: application/json
+
+{
+  "other": {}
+}

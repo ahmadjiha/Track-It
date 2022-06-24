@@ -1,10 +1,12 @@
 const express = require ('express');
 const router = express.Router();
+
 const boardsController = require("../controllers/boardsController");
 const listsController = require("../controllers/listsController");
 const cardsController = require('../controllers/cardsController');
 const commentsController = require('../controllers/commentsController');
-const { validateBoard, validateList, validateEditList, validateCard, validateComment } = require("../validators/validators");
+
+const { validateBoard, validateList, validateEditList, validateCard, validateComment, validateUpdateCard } = require("../validators/validators");
 
 // Boards
 router.get('/boards',boardsController.getBoards );
@@ -18,6 +20,7 @@ router.put('/lists/:id', validateEditList, listsController.editList );
 // Cards
 router.post('/cards', validateCard, cardsController.createCard );
 router.get('/cards/:id', cardsController.getCard );
+router.put('/cards/:id', validateUpdateCard, cardsController.updateCard );
 
 // Comments
 router.post('/comments', validateComment, commentsController.createComment );

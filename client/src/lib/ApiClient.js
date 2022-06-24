@@ -74,6 +74,14 @@ const apiClient = {
       logError(e);
     }
   },
+  updateCard: async (cardId, cardUpdates) => {
+    try {
+      const { data } = await axios.put(routes.UPDATE_CARD_URL + cardId, { card: cardUpdates });
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  },
   createComment: async (cardId, comment) => {
     try {
       const { data } = await axios.post(routes.CREATE_COMMENT_URL, { cardId, comment });
@@ -81,7 +89,7 @@ const apiClient = {
     } catch (e) {
       logError(e);
     }
-  },
+  }
 };
 
 export default apiClient;
