@@ -87,23 +87,19 @@ const cardSlice = createSlice({
       const fetchedCard = action.payload;
       // eslint-disable-next-line
       const { comments, ...cardWithoutComments } = fetchedCard;
+      
+      if (state.length === 0) {
+        return state.concat(cardWithoutComments);
+      }
 
-      const newState = state.filter(card => card._id !== fetchedCard._id);
-      return newState.concat(cardWithoutComments);
+      return state.map(card => {
+        if (card._id === cardWithoutComments._id) {
+          return cardWithoutComments;
+        }
+
+        return card;
+      });
     })
-    // builder.addCase(fetchCard.fulfilled, (state, action) => {
-    //   const fetchedCard = action.payload;
-    //   // eslint-disable-next-line
-    //   const { comments, ...cardWithoutComments } = fetchedCard;
-
-    //   return state.map(card => {
-    //     if (card._id === cardWithoutComments._id) {
-    //       return cardWithoutComments;
-    //     }
-
-    //     return card;
-    //   });
-    // })
     builder.addCase(updateCard.fulfilled, (state, action) => {
       const cardWithUpdates = action.payload;
       return state.map(card => {
