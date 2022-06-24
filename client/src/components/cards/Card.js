@@ -23,8 +23,10 @@ const Card = () => {
 
   const lists = useSelector(state => state.lists);
 
+  console.log(card);
+
   if (!card) {
-    return
+    return null
   }
 
 

@@ -17,7 +17,7 @@ const ListSchema = new Schema({
     default: new Date()
   },
   boardId: {
-    type: ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Board"
   },
   cards: [

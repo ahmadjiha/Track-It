@@ -8,6 +8,8 @@ exports.validateEditList = [check("title").not().isEmpty()];
 
 exports.validateCard = [check("card.title").not().isEmpty(), check("listId").not().isEmpty()];
 
+exports.validateComment = [check("comment.text").not().isEmpty(), check("cardId").not().isEmpty()];
+
 exports.validateUpdateCard = [check("card").custom((card) => {
   if (card.title !== undefined && card.title === "") {
     return false;

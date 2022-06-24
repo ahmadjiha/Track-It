@@ -43,7 +43,7 @@ const createCard = async (req, res, next) => {
 const getCard = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const card = await Card.findById(id);
+    const card = await Card.findById(id).populate('comments');
     console.log(card);
     res.json(card);
   } catch (e) {
