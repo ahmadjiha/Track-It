@@ -1,7 +1,41 @@
 import React from "react";
+import CommentTile from "./CommentTile";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { fetchCard } from "../../features/cards/cards";
 
-const Activity = () => {
+const Activity = ({ card }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCard({ id: card._id}));
+  }, [dispatch, card._id]);
+
+  const allComments = useSelector(state => state.comments);
+  const comments = allComments.filter(comment => comment.cardId === card._id);
+
   return (
+    <li className="activity-section">
+      <h2 className="activity-icon icon">Activity</h2>
+      <ul className="horiz-list">
+        <li className="not-implemented">Show Details</li>
+      </ul>
+      <ul className="modal-activity-list">
+        {comments.map(comment => 
+          < CommentTile key={comment._id} comment={comment} />
+        )}
+      </ul>
+    </li>
+  )
+}
+
+export default Activity;
+
+/*
+
+Original
+
     <li className="activity-section">
       <h2 className="activity-icon icon">Activity</h2>
       <ul className="horiz-list">
@@ -87,7 +121,5 @@ const Activity = () => {
         </li>
       </ul>
     </li>
-  )
-}
 
-export default Activity;
+*/

@@ -71,9 +71,11 @@ const cardSlice = createSlice({
     })
     builder.addCase(fetchCard.fulfilled, (state, action) => {
       const fetchedCard = action.payload;
+      // eslint-disable-next-line
+      const { comments, ...cardWithoutComments } = fetchedCard;
 
       const newState = state.filter(card => card._id !== fetchedCard._id);
-      return newState.concat(fetchedCard);
+      return newState.concat(cardWithoutComments);
     })
   }
 })

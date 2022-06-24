@@ -1,0 +1,9 @@
+POST http://localhost:5001/api/comments
+Content-Type: application/json
+
+{
+  "cardId": "62b48629cabca6a997a66456",
+  "comment": {
+    "text": "This is a new comment"
+  }
+}
