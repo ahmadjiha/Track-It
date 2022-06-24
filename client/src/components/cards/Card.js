@@ -24,7 +24,7 @@ const Card = () => {
   const lists = useSelector(state => state.lists);
 
   if (!card) {
-    return
+    return null
   }
 
   const list = lists.find(list => list._id === card.listId);

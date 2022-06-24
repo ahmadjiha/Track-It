@@ -4,6 +4,21 @@ import { fetchCard } from '../cards/cards';
 
 const initialState = [];
 
+export const createComment = createAsyncThunk(
+  "comments/createComment",
+  async (args) => {
+    const { cardId, comment, callback} = args;
+
+    const data = await apiClient.createComment(cardId, comment);
+
+    if (callback) {
+      callback();
+    }
+
+    return data;
+  }
+);
+
 const commentSlice = createSlice({
   name: "comments",
   initialState,
@@ -26,6 +41,10 @@ const commentSlice = createSlice({
       });
 
       return comments.concat(newState);
+    })
+    builder.addCase(createComment.fulfilled, (state, action) => {
+      const newComment = action.payload;
+      return state.concat(newComment);
     })
   }
 })

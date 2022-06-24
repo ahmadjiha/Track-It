@@ -2,7 +2,15 @@ import React from "react";
 
 
 const CommentTile = ({ comment }) => {
-  const commentPostedTimeAgoInMinutes = Math.floor((Date.now() - new Date(comment.createdAt)) / 1000 / 60);
+  const calculateTimePostInMinutes = () => {
+    if (!comment.createdAt) return 0;
+
+    const timeLapsed = Date.now() - new Date(comment.createdAt)
+
+    return Math.floor((timeLapsed) / 1000 / 60);
+  }
+
+  const timeLapsedInMinutes = calculateTimePostInMinutes();
 
   return (
       <li className="activity-comment">
@@ -14,7 +22,7 @@ const CommentTile = ({ comment }) => {
         <span>{comment.text}</span>
       </div>
       <small>
-        {commentPostedTimeAgoInMinutes} minutes ago - <span className="link">Edit</span> -{" "}
+        {timeLapsedInMinutes === 0 ? "Just now" : `${timeLapsedInMinutes} minutes ago`}  - <span className="link">Edit</span> -{" "}
         <span className="link">Delete</span>
       </small>
       <div className="comment">
