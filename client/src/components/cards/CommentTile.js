@@ -3,7 +3,7 @@ import React from "react";
 
 const CommentTile = ({ comment }) => {
   const calculateTimePostInMinutes = () => {
-    if (!comment.createdAt) return 0;
+    if (!comment) return 0;
 
     const timeLapsed = Date.now() - new Date(comment.createdAt)
 

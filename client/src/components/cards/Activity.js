@@ -5,16 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchCard } from "../../features/cards/cards";
 
-const Activity = () => {
+const Activity = ({ card }) => {
   const dispatch = useDispatch();
-  const { id } = useParams();
 
   useEffect(() => {
-    dispatch(fetchCard({id}));
-  }, [dispatch, id]);
-
-  const cards = useSelector(state => state.cards);
-  const card = cards.find(card => card._id === id);
+    dispatch(fetchCard({ id: card._id}));
+  }, [dispatch, card._id]);
 
   const allComments = useSelector(state => state.comments);
   const comments = allComments.filter(comment => comment.cardId === card._id);
