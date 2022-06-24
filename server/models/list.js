@@ -10,11 +10,11 @@ const ListSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: new Date()
+    default: () => new Date().toISOString()
   },
   updatedAt: {
     type: Date,
-    default: new Date()
+    default: () => new Date().toISOString()
   },
   boardId: {
     type: Schema.Types.ObjectId,

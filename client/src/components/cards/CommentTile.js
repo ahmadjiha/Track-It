@@ -2,11 +2,10 @@ import React from "react";
 
 
 const CommentTile = ({ comment }) => {
+
   const calculateTimePostInMinutes = () => {
     if (!comment) return 0;
-
-    const timeLapsed = Date.now() - new Date(comment.createdAt)
-
+    const timeLapsed = new Date() - new Date(comment.createdAt);
     return Math.floor((timeLapsed) / 1000 / 60);
   }
 
@@ -27,9 +26,7 @@ const CommentTile = ({ comment }) => {
       </small>
       <div className="comment">
         <label>
-          <textarea required="" rows="1">
-            {comment.text}
-          </textarea>
+          <textarea required="" rows="1" value={comment.text} readOnly/>
           <div>
             <a className="light-button card-icon sm-icon"></a>
             <a className="light-button smiley-icon sm-icon"></a>

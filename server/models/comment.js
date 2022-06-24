@@ -11,8 +11,8 @@ const CommentSchema = new Schema({
     ref: "Card"
   },
   createdAt: {
-    type: Date,
-    default: new Date()
+    type: String,
+    default: () => new Date().toISOString()
   },
   updatedAt: {
     type: Date,

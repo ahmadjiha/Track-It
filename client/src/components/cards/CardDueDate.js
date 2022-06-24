@@ -1,6 +1,6 @@
 import React from "react";
 
-const CardDueDate = () => {
+const CardDueDate = ({ card }) => {
   return (
     <li className="due-date-section">
       <h3>Due Date</h3>

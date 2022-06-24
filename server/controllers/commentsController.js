@@ -25,7 +25,7 @@ const createComment = async (req, res, next) => {
         _id: newComment._id,
         text: newComment.text,
         cardId: newComment.cardId,
-        createdA: newComment.createdAt,
+        createdAt: newComment.createdAt,
         updatedAt: newComment.updatedAt
       });
     } catch (e) {

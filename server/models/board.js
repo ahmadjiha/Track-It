@@ -8,11 +8,11 @@ const BoardSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: new Date()
+    default: () => new Date().toISOString()
   },
   updatedAt: {
     type: Date,
-    default: new Date()
+    default: () => new Date().toISOString()
   },
   lists: [
     {
