@@ -145,18 +145,18 @@ const Card = () => {
                 </li>
                 <li>
                   <div className="member-container">
-                    <div className="card-member small-size">VR</div>
+                    <div className="card-member small-size">AJ</div>
                   </div>
                   <p>
-                    <span className="member-name">Victor Reyes</span> changed the
+                    <span className="member-name">Ahmad Jiha</span> changed the
                     background of this board <small>yesterday at 4:53 PM</small>
                   </p>
                 </li>
                 <li className="activity-comment">
                   <div className="member-container">
-                    <div className="card-member">VR</div>
+                    <div className="card-member">AJ</div>
                   </div>
-                  <h3>Victor Reyes</h3>
+                  <h3>Ahmad Jiha</h3>
                   <div className="comment static-comment">
                     <span>Example of a comment.</span>
                   </div>

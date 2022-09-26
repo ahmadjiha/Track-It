@@ -14,9 +14,9 @@ const CommentTile = ({ comment }) => {
   return (
       <li className="activity-comment">
       <div className="member-container">
-        <div className="card-member">VR</div>
+        <div className="card-member">AJ</div>
       </div>
-      <h3>Victor Reyes</h3>
+      <h3>Ahmad Jiha</h3>
       <div className="comment static-comment">
         <span>{comment.text}</span>
       </div>
