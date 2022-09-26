@@ -23,14 +23,15 @@ const Card = () => {
 
   const lists = useSelector(state => state.lists);
 
-  console.log(card);
-
   if (!card) {
     return null
   }
 
-
   const list = lists.find(list => list._id === card.listId);
+
+  if (!list) {
+    return null;
+  }
 
   return (
     <div id="modal-container">

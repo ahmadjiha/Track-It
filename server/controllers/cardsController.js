@@ -60,6 +60,7 @@ const updateCard = async (req, res, next) => {
     try {
       const { id } = req.params;
       const cardUpdates = req.body.card;
+      cardUpdates.updatedAt = new Date().toISOString();
       const cardWithUpdates = await Card.findByIdAndUpdate(id, cardUpdates, { new: true });
   
       if (cardWithUpdates === null) {

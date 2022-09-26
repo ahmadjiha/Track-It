@@ -1,13 +1,18 @@
-import { createDraftSafeSelector } from "@reduxjs/toolkit";
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createComment } from "../../features/comments/comments";
 
 const AddComment = ({ card }) => {
-  const [newCommentText, setNewCommentText] = useState("");
   const dispatch = useDispatch();
+  
+  const [newCommentText, setNewCommentText] = useState("");
 
   const disableAddCommentSaveButton = newCommentText.length === 0 ? true : false;
+  const saveButtonClassNames = newCommentText.length === 0 ? "button not-implemented" : "button";
+
+  const resetCommentForm = () => {
+    setNewCommentText("");
+  }
 
   const handleNewCommentTextChange = (event) => {
     event.preventDefault();
@@ -19,10 +24,6 @@ const AddComment = ({ card }) => {
     if (newCommentText !== 0) {
       dispatch(createComment({ cardId: card._id, comment: { text: newCommentText }, callback: resetCommentForm }));
     }
-  }
-
-  const resetCommentForm = () => {
-    setNewCommentText("");
   }
   
   return (
@@ -39,7 +40,8 @@ const AddComment = ({ card }) => {
               rows="1"
               placeholder="Write a comment..."
               onChange={handleNewCommentTextChange}
-            >{newCommentText}</textarea>
+              value={newCommentText}
+            />
             <div>
               <a className="light-button card-icon sm-icon"></a>
               <a className="light-button smiley-icon sm-icon"></a>
@@ -49,7 +51,7 @@ const AddComment = ({ card }) => {
             <div>
               <input
                 type="submit"
-                className="button not-implemented"
+                className={saveButtonClassNames}
                 disabled={disableAddCommentSaveButton}
                 value="Save"
                 onClick={handleAddComment}

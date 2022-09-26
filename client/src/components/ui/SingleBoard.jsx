@@ -248,7 +248,7 @@ const SingleBoard = () => {
           <div className="menu-contents">
             <div className="members">
               <div className="member-container">
-                <div className="card-member ">VR</div>
+                <div className="card-member ">AJ</div>
               </div>
               <div className="member-container">
                 <div className="card-member admin">TP</div>

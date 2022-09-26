@@ -2,11 +2,10 @@ import React from "react";
 
 
 const CommentTile = ({ comment }) => {
+
   const calculateTimePostInMinutes = () => {
     if (!comment) return 0;
-
-    const timeLapsed = Date.now() - new Date(comment.createdAt)
-
+    const timeLapsed = new Date() - new Date(comment.createdAt);
     return Math.floor((timeLapsed) / 1000 / 60);
   }
 
@@ -15,9 +14,9 @@ const CommentTile = ({ comment }) => {
   return (
       <li className="activity-comment">
       <div className="member-container">
-        <div className="card-member">VR</div>
+        <div className="card-member">AJ</div>
       </div>
-      <h3>Victor Reyes</h3>
+      <h3>Ahmad Jiha</h3>
       <div className="comment static-comment">
         <span>{comment.text}</span>
       </div>
@@ -27,9 +26,7 @@ const CommentTile = ({ comment }) => {
       </small>
       <div className="comment">
         <label>
-          <textarea required="" rows="1">
-            {comment.text}
-          </textarea>
+          <textarea required="" rows="1" value={comment.text} readOnly/>
           <div>
             <a className="light-button card-icon sm-icon"></a>
             <a className="light-button smiley-icon sm-icon"></a>

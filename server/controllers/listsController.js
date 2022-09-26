@@ -48,7 +48,7 @@ const editList = async(req, res, next) => {
       }
 
       list.title = req.body.title;
-      list.updatedAt = new Date();
+      list.updatedAt = new Date().toISOString();
 
       await list.save();
 
